@@ -1,11 +1,8 @@
 #!/bin/bash
 set -e
 
-echo "📦 Installing dependencies..."
-npm install
-
-echo "🔨 Building frontend..."
-npm run build --workspace=frontend
+echo "� Building frontend..."
+cd frontend && npm install && npm run build && cd ..
 
 echo "🚀 Starting server..."
-npm start --workspace=backend
+cd backend && npm install && node server.js

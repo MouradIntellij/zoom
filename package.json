@@ -9,10 +9,8 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
-    "build": "npm run build --workspace=frontend && npm start --workspace=backend",
-    "build:all": "npm run build --workspaces",
-    "preview": "npm run preview --workspace=frontend",
-    "start": "npm start --workspace=backend"
+    "build": "cd frontend && npm install && npm run build",
+    "start": "npm run build && cd backend && npm install && node server.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
