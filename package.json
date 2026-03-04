@@ -1,0 +1,20 @@
+{
+  "name": "jitsi-meeting-app",
+  "version": "1.0.0",
+  "description": "Full-stack Jitsi video conferencing application",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"npm run dev --workspace=backend\"",
+    "build": "npm run build --workspace=frontend && npm start --workspace=backend",
+    "build:all": "npm run build --workspaces",
+    "preview": "npm run preview --workspace=frontend",
+    "start": "npm start --workspace=backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
