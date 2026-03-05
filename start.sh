@@ -1,22 +1,24 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Installing root dependencies..."
+echo "🔧 Installing all workspace dependencies..."
 npm install
 
-echo "🔧 Installing backend dependencies..."
+echo "🔧 Installing backend dependencies explicitly..."
 cd backend && npm install && cd ..
 
-echo "🔧 Installing frontend dependencies..."
-cd frontend && npm install
+echo "🔨 Building frontend from root..."
+npm run build --workspace=frontend
 
-echo "🔨 Building frontend..."
-npm run build
+echo "✅ Checking build output..."
+if [ -f "frontend/dist/index.html" ]; then
+    echo "✅ Build successful! index.html exists"
+    ls -la frontend/dist/
+else
+    echo "❌ Build failed! index.html not found"
+    exit 1
+fi
 
-echo "✅ Build completed successfully!"
-ls -la dist/
-
-cd ..
 echo "🚀 Starting backend..."
 node backend/server.js
 
