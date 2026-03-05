@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Installing dependencies..."
+echo "🔧 Installing root dependencies..."
 npm install
 
+echo "🔧 Installing frontend dependencies..."
+cd frontend && npm install
+
 echo "🔨 Building frontend..."
-cd frontend && npm run build
+npm run build
 
 cd ..
 echo "🚀 Starting backend..."
