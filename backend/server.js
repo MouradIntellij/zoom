@@ -24,6 +24,7 @@ app.get('/health', (req, res) => {
 
 // API Routes with /api prefix (for production)
 app.post('/api/meeting/create', (req, res) => {
+  console.log('📡 API call received:', req.method, req.path, req.body)
   try {
     const { roomName } = req.body
 
@@ -39,13 +40,14 @@ app.post('/api/meeting/create', (req, res) => {
       status: 'active'
     }
 
+    console.log('✅ Meeting created:', meetingData)
     res.json({
       success: true,
       message: 'Meeting created successfully',
       data: meetingData
     })
   } catch (error) {
-    console.error('Error creating meeting:', error)
+    console.error('❌ Error creating meeting:', error)
     res.status(500).json({ error: 'Failed to create meeting' })
   }
 })
