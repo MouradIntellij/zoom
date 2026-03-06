@@ -22,6 +22,56 @@ app.get('/health', (req, res) => {
   res.json({ status: 'Server is running' })
 })
 
+// API Routes with /api prefix (for production)
+app.post('/api/meeting/create', (req, res) => {
+  try {
+    const { roomName } = req.body
+
+    if (!roomName || roomName.trim() === '') {
+      return res.status(400).json({ error: 'Room name is required' })
+    }
+
+    // Generate meeting data
+    const meetingData = {
+      roomName: `vpaas-magic-cookie-d34b822d13494d7cbf3ee724dffa38bc/${roomName}`,
+      domain: '8x8.vc',
+      createdAt: new Date(),
+      status: 'active'
+    }
+
+    res.json({
+      success: true,
+      message: 'Meeting created successfully',
+      data: meetingData
+    })
+  } catch (error) {
+    console.error('Error creating meeting:', error)
+    res.status(500).json({ error: 'Failed to create meeting' })
+  }
+})
+
+app.get('/api/meeting/:roomName', (req, res) => {
+  try {
+    const { roomName } = req.params
+
+    const meetingInfo = {
+      roomName,
+      domain: '8x8.vc',
+      joinUrl: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/${roomName}`,
+      status: 'available'
+    }
+
+    res.json({
+      success: true,
+      data: meetingInfo
+    })
+  } catch (error) {
+    console.error('Error fetching meeting:', error)
+    res.status(500).json({ error: 'Failed to fetch meeting' })
+  }
+})
+
+// Legacy Routes without /api prefix (for backward compatibility)
 app.post('/meeting/create', (req, res) => {
   try {
     const { roomName } = req.body
